@@ -13,10 +13,11 @@ const createContact = asyncHandler(async (req, res) => {
     role,
     message,
     termsAndCondition,
-    selectedCheckboxes
+    services, // Add services field
+    
   } = req.body;
 
- 
+  try {
     // Create new contact
     const contact = await Contact.create({
       firstName,
@@ -27,14 +28,17 @@ const createContact = asyncHandler(async (req, res) => {
       role,
       message,
       termsAndCondition,
-      selectedCheckboxes
+      services, // Include services field
+      
     });
 
     return res
       .status(201)
       .json(new ApiResponse(200, contact, "Contact created successfully"));
-  } 
-);
+  } catch (error) {
+    throw new ApiError(500, "Error while creating contact", error);
+  }
+});
 
 const getContacts = asyncHandler(async (req, res) => {
   try {
@@ -48,7 +52,5 @@ const getContacts = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Error while fetching contacts", error);
   }
 });
-
-// You can add more controller functions like updateContact, deleteContact, etc. as needed
 
 export { createContact, getContacts };
