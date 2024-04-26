@@ -6,10 +6,6 @@ const serviceSchema = new Schema({
         type: String,
         required: true
     },
-    checked: {
-        type: Boolean,
-        required: true
-    }
 });
 
 // Define the main contact schema
@@ -50,19 +46,14 @@ const contactSchema = new Schema({
         type: Boolean,
         required: true
     },
-    selectedCheckboxes: [{
+    services: [{
         name: {
             type: String,
             required: true
         },
-        checked: {
-            type: Boolean,
-            required: true
-        },
-        services: [serviceSchema]
+        subservices: [serviceSchema]
     }]
 }, { timestamps: true });
 
 export const Contact = mongoose.model("Contact", contactSchema);
-
 
